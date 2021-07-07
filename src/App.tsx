@@ -1,9 +1,10 @@
 import React from "react";
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from "styled-components";
 import GlobaStyles from "./styles/GlobaStyles";
 
 import Layout from "./components/Layout";
 import Dashboard from "./pages/Dashboard";
+import List from "./pages/List";
 import dark from './styles/themes/dark'
 
 const App: React.FC = () => {
@@ -11,7 +12,7 @@ const App: React.FC = () => {
         <ThemeProvider theme={dark}>
             <GlobaStyles />
             <Layout>
-                <Dashboard />
+                <List />
             </Layout>
         </ThemeProvider>
     );
