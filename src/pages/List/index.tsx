@@ -6,6 +6,8 @@ import HistoryFinanceCard from "../../components/HistoryFinanceCard";
 
 import gains from "../../repositories/gains";
 import expenses from "../../repositories/expenses";
+import formatCurrency from "../../utils/formatCurrency";
+import formatDate from "../../utils/formatDate";
 
 import { Container, Content, Filters } from './styles'
 
@@ -62,9 +64,9 @@ const List: React.FC<IRouteParams> = ({ match }) => {
             return {
                 id: String(Math.random() * data.length), //Criando um id aleatório com base no tamanho da lista
                 description: item.description,
-                amountFormatted: item.amount,
+                amountFormatted: formatCurrency(Number(item.amount)),
                 frequency: item.frequency,
-                dataFormatted: item.date,
+                dataFormatted: formatDate(item.date),
                 tagColor: item.frequency === 'recorrente' ? '#4E41F0' : '#E44C4E'
             }
         })
