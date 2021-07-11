@@ -35,6 +35,7 @@ const List: React.FC<IRouteParams> = ({ match }) => {
     const [data, setData] = useState<IData[]>([]);
     const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth() + 1)); //String(new Date().getMonth() + 1 é para pegar o mes atual no filtro como default
     const [yearSelected, setYearSelected] = useState<string>(String(new Date().getFullYear())); //String(new Date().getFullYear()) é para pegar o ano atual no filtro como default
+    const [selectedFrequency, setSelectedFrequency] = useState(['recorrente', 'eventual']); //Estado utilizado para armazenar as frequências. Irá começar com um array de string e os dois filtros habilitados.
 
     const { type } = match.params;
 
@@ -82,13 +83,24 @@ const List: React.FC<IRouteParams> = ({ match }) => {
         });
     }, []);
 
-    useEffect(() => {
+    const handleFrequencyClick = (frequency: string) => {
+        const alreadySelected = selectedFrequency.findIndex(item => item === frequency);
+
+        if(alreadySelected >= 0){
+            const filtered = selectedFrequency.filter(item => item !== frequency);
+            setSelectedFrequency(filtered);
+        } else {
+            setSelectedFrequency((prev) => [...prev, frequency]); //Operador de spread, para manter o que já estava na lista e adicionar também o novo filtro.
+        }
+    }
+
+    useEffect(() => { //Filtragem dos registros
         const filteredDate = listData.filter(item => {
             const date = new Date(item.date);
             const month = String(date.getMonth() + 1);
             const year = String(date.getFullYear());
 
-            return month === monthSelected && year === yearSelected;
+            return month === monthSelected && year === yearSelected && selectedFrequency.includes(item.frequency);
         });
 
         const formattedDate = filteredDate.map(item => {
@@ -103,7 +115,7 @@ const List: React.FC<IRouteParams> = ({ match }) => {
         });
 
         setData(formattedDate);
-    },[listData, monthSelected, yearSelected]);
+    },[listData, monthSelected, yearSelected, selectedFrequency]);
 
     return (
        <Container>
@@ -113,11 +125,19 @@ const List: React.FC<IRouteParams> = ({ match }) => {
             </ContentHeader>
 
             <Filters>
-                <button type="button" className="tag-filter tag-filter-recurrent">
+                <button type="button" 
+                        className={`tag-filter tag-filter-recurrent
+                        ${selectedFrequency.includes('recorrente') && 'tag-actived'}`} //Exemplo de classe baseada em condição. Para funcionar, tem que utilizar a interpolação de string ``
+                        onClick={() => handleFrequencyClick('recorrente')}
+                >
                     Recorrentes
                 </button>
 
-                <button type="button" className="tag-filter  tag-filter-eventual">
+                <button type="button" 
+                        className={`tag-filter  tag-filter-eventual
+                        ${selectedFrequency.includes('eventual') && 'tag-actived'}`} //Exemplo de classe baseada em condição.
+                        onClick={() => handleFrequencyClick('eventual')}
+                >
                     Eventuais
                 </button>
             </Filters>
