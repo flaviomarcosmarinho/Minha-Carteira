@@ -4,6 +4,7 @@ import ContentHeader from "../../components/ContentHeader";
 import SelectInput from "../../components/SelectInput";
 import WalletBox from "../../components/WalletBox";
 import MessageBox from "../../components/MessageBox";
+import PieChart from "../../components/PieChart";
 
 import expenses from "../../repositories/expenses";
 import gains from "../../repositories/gains";
@@ -18,12 +19,6 @@ import { Container, Content } from "./styles";
 const Dashboard: React.FC = () => { 
     const [monthSelected, setMonthSelected] = useState<number>(new Date().getMonth() + 1); //String(new Date().getMonth() + 1 é para pegar o mes atual no filtro como default
     const [yearSelected, setYearSelected] = useState<number>(new Date().getFullYear()); //String(new Date().getFullYear()) é para pegar o ano atual no filtro como default
-
-    const options = [
-        {value: 'Flávio', label: 'Flávio'},
-        {value: 'Natália', label: 'Natália'},
-        {value: 'Stela', label: 'Stela'},
-    ];
 
     const years = useMemo(() => {
         let uniqueYears: number[] = [];          
@@ -108,7 +103,7 @@ const Dashboard: React.FC = () => {
                 footerText: "Verifique seus gastos e tente cortar algumas coisas desnecessárias.",
                 icon: sadImg
             }
-        } else if(grandTotal == 0) {
+        } else if(grandTotal === 0) {
             return {
                 title: "Ufaa!",
                 description: "Neste mês, você gastou exatamente o que ganhou.",
@@ -189,7 +184,10 @@ const Dashboard: React.FC = () => {
                     description={message.description}
                     footerText={message.footerText}
                     icon={message.icon}
-                />                                    
+                />
+
+                <PieChart>
+                </PieChart>                                   
             </Content>
         </Container>
     );
