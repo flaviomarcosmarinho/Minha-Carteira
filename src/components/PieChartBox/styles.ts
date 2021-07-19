@@ -72,5 +72,7 @@ export const Legend = styled.li<ILegendProps> `
 `;
 
 export const SideRight = styled.main ` //Conteúdo principal
-
+    display: flex;
+    flex: 1;
+    justify-content: center;
 `; 

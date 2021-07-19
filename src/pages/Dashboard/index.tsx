@@ -4,7 +4,7 @@ import ContentHeader from "../../components/ContentHeader";
 import SelectInput from "../../components/SelectInput";
 import WalletBox from "../../components/WalletBox";
 import MessageBox from "../../components/MessageBox";
-import PieChart from "../../components/PieChart";
+import PieChartBox from "../../components/PieChartBox";
 
 import expenses from "../../repositories/expenses";
 import gains from "../../repositories/gains";
@@ -120,6 +120,29 @@ const Dashboard: React.FC = () => {
         }
     }, [grandTotal]);
 
+    const relationExpensesVersusGains =  useMemo(() => {
+        const total = totalGains + totalExpenses;
+        const percentGains = (totalGains * 100) / total;
+        const percentExpenses = (totalExpenses * 100) / total;
+
+        const data = [
+            {
+                name: "Entradas",
+                value: totalGains,
+                percent: Number(percentGains.toFixed(1)),
+                color: '#E44C4E'
+            },
+            {
+                name: "Saídas",
+                value: totalExpenses,
+                percent: Number(percentExpenses.toFixed(1)),
+                color: '#F7931B'
+            }
+        ];
+
+        return data;
+    }, [totalGains, totalExpenses]);
+
     const handleMonthSelected = (month: string) => {
         try {
             const parseMonth = Number(month);
@@ -186,8 +209,7 @@ const Dashboard: React.FC = () => {
                     icon={message.icon}
                 />
 
-                <PieChart>
-                </PieChart>                                   
+                <PieChartBox data={relationExpensesVersusGains} />                                            
             </Content>
         </Container>
     );

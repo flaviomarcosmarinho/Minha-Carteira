@@ -12,7 +12,6 @@ import formatDate from "../../utils/formatDate";
 import listOfMonths from "../../utils/months";
 
 import { Container, Content, Filters } from './styles'
-import { ThemeContext } from "styled-components";
 
 interface IRouteParams {
     match: {
