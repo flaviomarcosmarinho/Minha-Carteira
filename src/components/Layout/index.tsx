@@ -6,8 +6,7 @@ import MainHeader from "../MainHeader";
 import Aside from "../Aside";
 import Content from "../Content";
 
-const Layout: React.FC = ({children}) => {
-    return (
+const Layout: React.FC = ({children}) =>  (
         <Grid>
             <MainHeader />
             <Aside />
@@ -16,6 +15,5 @@ const Layout: React.FC = ({children}) => {
             </Content>
         </Grid>        
     );
-}
 
 export default Layout;

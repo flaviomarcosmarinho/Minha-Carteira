@@ -10,8 +10,8 @@ export default {
         black: '#FFF',
         gray: '#BFBFBF',
 
-        success: '#03B85',
-        info: '#3B598',
+        success: '#03BB85',
+        info: '#3B5998',
         warning: '#FF6961',
     },
 };
