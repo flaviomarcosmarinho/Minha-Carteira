@@ -32,7 +32,7 @@ export const Filters = styled.div `
             content: '';
             display: block;
             width: 55px;
-            margin: 0 auto;
+            margin: 0 auto; /* centraliza */
             border-bottom: 10px solid ${props => props.theme.colors.success};
     } 
 
