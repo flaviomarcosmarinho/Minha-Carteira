@@ -16,6 +16,7 @@ export const Grid = styled.div `
     'AS CT';
 
     height: 100vh; /* view height */
+    min-width: 315px; /* Travando o layout para não ficar menor que 315px */
 
     @media(max-width: 600px){ /* utilizando @media para esconder o Aside para resoluções menores que 600px */
         grid-template-columns: 100%;

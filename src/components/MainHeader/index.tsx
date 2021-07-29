@@ -1,7 +1,6 @@
-import React, {useMemo, useState} from "react";
+import React, {useMemo, useState} from 'react';
 
-import Toggle from '../Toggle'
-import emojis from "../../utils/emojis";
+import emojis from '../../utils/emojis';
 
 import { useTheme } from '../../hooks/theme'
 
@@ -9,8 +8,9 @@ import {
     Container, 
     Profile, 
     Welcome, 
-    UserName 
-} from "./styles";
+    UserName ,
+    Toggle,
+} from './styles';
 
 const MainHeader: React.FC = () => {
     const { toggleTheme, theme } = useTheme(); //Tras do Hook o thema selecionado

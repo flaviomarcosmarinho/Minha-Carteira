@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useState } from 'react';
+import Toggle from '../Toggle';
+
 import {
     MdDashboard,
     MdArrowDownward,
     MdArrowUpward,
-    MdExitToApp
+    MdExitToApp,
+    MdClose,
+    MdMenu,
 } from 'react-icons/md' /* yarn add react-icons */
 
 import logoImg from '../../assets/logo.svg';
 
 import { useAuth } from "../../hooks/auth";
+import { useTheme } from "../../hooks/theme";
 
 import { 
     Container,
@@ -18,14 +23,34 @@ import {
     MenuContainer,
     MenuItemLink,
     MenuItemButton,
+    ToggleMenu,
+    ThemeToggleFooter,
  } from "./styles";
 
 const Aside: React.FC = () => {
     const { sighOut } = useAuth();
-     
+    const { toggleTheme, theme } = useTheme(); //Tras do Hook o thema selecionado
+
+    const [toogleMenuIsOpened, setToogleMenuIsOpened] = useState(false);    
+    const [darkTheme, setDarkTheme] = useState(() => theme.title === 'dark' ? true : false); //Cria um estado para saber se o dark está selecionado    
+
+    const handleToggleMenu = () => {
+        setToogleMenuIsOpened(!toogleMenuIsOpened);
+    };
+
+    const handleChangeTheme = () => {
+        setDarkTheme(!darkTheme);
+        toggleTheme();
+    };
+
     return (
-        <Container>
+        <Container menuIsOpen={toogleMenuIsOpened}>
             <Header>
+                <ToggleMenu onClick={handleToggleMenu}>
+                    { toogleMenuIsOpened ? <MdClose/> : <MdMenu/> } {/*Se o menu está aberto, mostra o icone de fechar, caso contrário mostra o icone do menu para mobile*/}
+                </ToggleMenu>
+
+
                 <LogoImg src ={logoImg} alt="Logo Minha Carteira" />
                 <Title>Minha Carteira</Title>
             </Header>
@@ -52,6 +77,15 @@ const Aside: React.FC = () => {
                 </MenuItemButton>
 
             </MenuContainer>
+
+            <ThemeToggleFooter menuIsOpen={toogleMenuIsOpened}>
+                <Toggle 
+                    labelLeft="Light"
+                    labelRight="Dark"
+                    checked={darkTheme}
+                    onChange={handleChangeTheme} //Chama a função utilizada para lidar com o thema
+                />
+            </ThemeToggleFooter>
         </Container>        
     );
 }
